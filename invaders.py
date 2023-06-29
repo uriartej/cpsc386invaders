@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
+# Juan Uriarte
+# uriarte.juan@csu.fullerton.edu
+# uriartej
 
 """
 Imports the the game demo and executes the main function.
 """
 
-import sys
-import game
+from videogame.game import VideoGame
+
+def main():
+    game = Game()
+    game.run()
 
 if __name__ == "__main__":
-    # TODO: Prepare and run the game
-    sys.exit(0)
+    main()
