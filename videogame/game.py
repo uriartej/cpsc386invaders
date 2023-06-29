@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# Juan Uriarte
+# uriarte.juan@csu.fullerton.edu
+# uriartej
+
 """Game objects to create PyGame based games."""
 
 import os
@@ -65,18 +70,29 @@ class MyVideoGame(VideoGame):
     def __init__(self):
         """Init the Pygame demo."""
         # TODO: initialize the window and set the title to "Hello"
-        super().__init__()
+        super().__init__(window_title="Hello")
         # TODO: Define an instance variable named self._main_dir which is the absolute path to the parent directory of this file, __file__.
+        self._main_dir = os.path.abspath(os.path.dirname(__file__))
+        self._main_dir = os.path.join(self._main_dir, "data")
         # TODO: Define an instance variable named self._data_dir which is self._main_dir joined with "data".
         # TODO: build the game's scene graph
-        self._main_dir = None
-        self._data_dir = None
         # print(f"Our main directory is {self._main_dir}")
         # print(f"Our data directory is {self._data_dir}")
+        self.build_scene_graph()
 
     def build_scene_graph(self):
         """Build scene graph for the game demo."""
         # TODO: implement how the scene graph for this game is built.
+        self._scene_graph = [
+            PolygonTitleScene(
+            self._screen,
+            "Welcome to Space Invaders",
+            title_color = rgbcolors.ghost_white,
+            title_size = 72,
+            background_color = rgbcolors.papaya_whip,
+            soundtrack = "03+Dawn+Metropolis.mp3"
+            )
+        ]
         raise NotImplementedError
 
     def run(self):
