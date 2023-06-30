@@ -11,9 +11,6 @@ from videogame.game import MyVideoGame
 
 def main():
     game = MyVideoGame()
-
-    game.build_scene_graph()
-    
     game.run()
 
 if __name__ == "__main__":
