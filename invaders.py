@@ -7,10 +7,13 @@
 Imports the the game demo and executes the main function.
 """
 
-from videogame.game import VideoGame
+from videogame.game import MyVideoGame
 
 def main():
-    game = Game()
+    game = MyVideoGame()
+
+    game.build_scene_graph()
+    
     game.run()
 
 if __name__ == "__main__":
