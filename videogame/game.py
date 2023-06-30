@@ -83,7 +83,7 @@ class MyVideoGame(VideoGame):
             "Welcome to Space Invaders",
             title_color = rgbcolors.ghost_white,
             title_size = 72,
-            background_color = rgbcolors.papaya_whip,
+            background_color = rgbcolors.green,
             soundtrack = os.path.join(self._data_dir, "03+Dawn+Metropolis.mp3")
             )
         ]
