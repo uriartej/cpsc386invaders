@@ -7,9 +7,7 @@
 
 import os
 import warnings
-
 import pygame
-
 import rgbcolors
 from scene import PolygonTitleScene
 
@@ -34,7 +32,7 @@ class VideoGame:
         self,
         window_width=800,
         window_height=800,
-        window_title="My Awesome Game",
+        window_title="My Game",
     ):
         """Initialize a new game with the given window size and window title."""
         pygame.init()
@@ -76,33 +74,46 @@ class MyVideoGame(VideoGame):
 
     def build_scene_graph(self):
         """Build scene graph for the game demo."""
-        # TODO: implement how the scene graph for this game is built.
         self._scene_graph = [
             PolygonTitleScene(
-            self._screen,
-            "Welcome to Space Invaders",
-            title_color = rgbcolors.ghost_white,
-            title_size = 72,
-            background_color = rgbcolors.green,
-            soundtrack = os.path.join(self._data_dir, "03+Dawn+Metropolis.mp3")
+                self._screen,
+                "Welcome to Space Invaders",
+                title_color = rgbcolors.ghost_white,
+                title_size = 72,
+                background_color = rgbcolors.green,
+                soundtrack = os.path.join(self._data_dir, "03+Dawn+Metropolis.mp3")
             )
         ]
 
     def run(self):
         """Run the game; the main game loop."""
         scene_iterator = iter(self.scene_graph)
-        while not self._game_is_over:
+        while True:
             current_scene = next(scene_iterator)
             current_scene.start_scene()
             while current_scene.is_valid():
                 self._clock.tick(current_scene.frame_rate())
                 for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                            break
                     current_scene.process_event(event)
+                
                 current_scene.update_scene()
-                current_scene.draw()
                 current_scene.render_updates()
-                pygame.display.update()
+                current_scene.draw()
+
+                pygame.display.flip()
+
+                if not current_scene.is_valid():
+                    break
+
             current_scene.end_scene()
-            self._game_is_over = True
+
+            if not current_scene.is_last_scene():
+                continue
+                
+            break
+        
         pygame.quit()
-        return 0
+        
