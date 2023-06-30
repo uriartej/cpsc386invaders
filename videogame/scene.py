@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# Juan Uriarte
+# uriarte.juan@csu.fullerton.edu
+# uriartej
+
 """Scene objects for making games with PyGame."""
 
 import pygame
@@ -77,10 +82,8 @@ class PressAnyKeyToExitScene(Scene):
 
     def process_event(self, event):
         """Process game events."""
-        # TODO: Have the super/parent class process the event first before
-        # processing the event yourself.
-        # TOOD: If the event type is a keydown event, set self._is_valid to False.
-
+        if event.type == pygame.KEYDOWN:
+            self._is_valid = False
 
 class PolygonTitleScene(PressAnyKeyToExitScene):
     """Scene with a title string and a polygon."""
@@ -95,14 +98,28 @@ class PolygonTitleScene(PressAnyKeyToExitScene):
         soundtrack=None,
     ):
         """Initialize the scene."""
-        # TODO: Have the super/parent class initialized
-        # TODO: Ask pygame for the default font at title_size size. Use the font to render the string title and assign this to an instance variable named self._title in the color title_color.
-        # TODO: Ask pygame for the default font at 18 point size. Use the font to render the string 'Press any key.' in the color black. Assign the rendered text to an instance variable named self._press_any_key.
+        super().__init__(screen, background_color, soundtrack)
+        self._title = pygame.font.Font(None, title_size).render(title, True, title_color)
+        self._press_any_key = pygame.font.Font(None, 18).render("Press any key.", True, rgbcolors.blue)
+        
 
     def draw(self):
         """Draw the scene."""
-        # TODO: Have the super/parent class draw first before
-        # drawing yourself.
-        # TODO: Draw a 100 pixel by 100 pixel rectangle that has it's center located 100 pixels below the center of the window.
-        # TODO: Blit the title text to the center of the window.
-        # TODO: Blit the press any key message to the bottom of the window. The text should be centered horizontally and be 50 pixels above the bottom edge of the window.
+        super().draw()
+        rect = pygame.Rect(0, 0, 100, 100)
+        rect.center = self._screen.get_rect().center
+        pygame.draw.rect(self._screen, rgbcolors.red, rect)
+
+        
+        title_rect = self._title.get_rect()
+        title_rect.center = self._screen.get_rect().center
+        self._screen.blit(self._title, title_rect)
+
+        
+        press_key_rect = self._press_any_key.get_rect()
+        press_key_rect.centerx = self._screen.get_rect().centerx
+        press_key_rect.bottom = self._screen.get_rect().bottom - 50
+        self._screen.blit(self._press_any_key, press_key_rect)
+
+    def is_last_scene(self):
+        return True
